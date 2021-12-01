@@ -188,7 +188,7 @@ django:
     app_settings:
       processes: 2
       threads: 2
-    enable_debugpy: false  # this also requires DD_DEBUG to be set to True
+    enable_debug: false  # this also requires DD_DEBUG to be set to True
     certificates:
     # includes additional CA certificate as volume, it refrences REQUESTS_CA_BUNDLE env varible
     # to create configMap `kubectl create  cm defectdojo-ca-certs --from-file=ca.crt`
@@ -261,16 +261,14 @@ initializer:
 
 mysql:
   enabled: false
-  auth:
-    username: defectdojo
-    password: ""
-    rootPassword: ""
-    database: defectdojo
-    existingSecret: defectdojo-mysql-specific
-    secretKey: mysql-password
-  master:
-    service:
-      port: 3306
+  mysqlUser: defectdojo
+  mysqlPassword: ""
+  mysqlRootPassword: ""
+  existingSecret: defectdojo-mysql-specific
+  secretKey: mysql-password
+  mysqlDatabase: defectdojo
+  service:
+    port: 3306
   # To use an external mySQL instance, set enabled to false and uncomment
   # the line below / add external address:
   # mysqlServer: "127.0.0.1"
@@ -355,6 +353,7 @@ rabbitmq:
     password: ""
     erlangCookie: ""
     existingPasswordSecret: defectdojo-rabbitmq-specific
+    secretPasswordKey: ""
     existingErlangSecret: defectdojo-rabbitmq-specific
   memoryHighWatermark:
     enabled: true
